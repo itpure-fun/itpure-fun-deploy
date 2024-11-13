@@ -49,11 +49,12 @@ comopser install -vvv
 cd ..
 
 # 执行
-docker-compose up -d nginx hyperf node mysql
+docker-compose up -d nginx hyperf node mysql redis
 ```
 
 4. 访问
 
-> http://localhost/
+> 前台：http://localhost/
 
+> 后台：http://localhost/admin
   

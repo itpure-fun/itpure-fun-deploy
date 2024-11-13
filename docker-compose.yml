@@ -8,7 +8,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./${APP_FRONT}/admin:/usr/share/nginx/html/admin
+      - ./${APP_FRONT:-front-local}/admin:/usr/share/nginx/html/admin
       - ./docker/nginx-frontend/servers:/etc/nginx/conf.d
       - ./docker/nginx-frontend/config:/etc/nginx/config
       - ./docker/nginx-frontend/cert:/etc/nginx/cert
@@ -16,14 +16,14 @@ services:
     networks:
       - net-itpure-fun
 
-  #nuxt
+  #node
   node:
     image: node:lts-alpine3.19
     environment:
       - "TIMEZONE=Asia/Shanghai"
     working_dir: "/opt/www"
     volumes:
-      - ./${APP_FRONT}/web:/opt/www
+      - ./${APP_FRONT:-front-local}/web:/opt/www
     ports:
       - "3000:3000"
     entrypoint: ["node", "server/index.mjs"]
@@ -44,7 +44,7 @@ services:
       - "9502:9502"
       - "9503:9503"
     volumes:
-      - ./:/opt/www
+      - ./${APP_BACKEND:-itpure-fun}/:/opt/www
     entrypoint: ["php", "watch", "-c"]
     restart: always
     networks:
@@ -60,7 +60,7 @@ services:
       - "lower_case_table_names=1"
     volumes:
       - ./docker/mysql/8/my.cnf:/etc/my.cnf
-      - ./docker/mysql/8/data:/var/lib/mysql
+      # - ./docker/mysql/8/data:/var/lib/mysql
       - ./docker/mysql/8/logs:/var/log/mysql
       - ./docker/mysql/db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
@@ -73,6 +73,8 @@ services:
   redis:
     image: redis
     restart: always
+    ports:
+      - "6379:6379"
     networks:
       - net-itpure-fun
   rabbitmq:
