@@ -54,7 +54,7 @@ docker-compose up -d nginx hyperf node mysql redis
 
 > 注意：构建过程需要几分钟，如遇到访问`500`稍等一会儿即可访问
 
-4. 访问
+5. 访问
 
 > 前台：http://localhost/
 
