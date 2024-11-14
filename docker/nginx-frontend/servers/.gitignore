@@ -1,4 +1,4 @@
 *
 !.gitignore
-!example.conf.bak
+!example.conf
 !mine-websocket.conf
